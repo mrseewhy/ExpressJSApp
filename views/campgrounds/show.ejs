@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+<div class="row mt-3">
+  <div class="col-md-3">
+    <p class="lead">YelpCamp - Created By <%=campground.author.username   %></p>
+    <ul class="list-group">
+      <li class="list-group-item active">
+        Info 1
+      </li>
+      <li class="list-group-item">
+        Info 2
+      </li>
+      <li class="list-group-item">
+        Info 3
+      </li>
+      <li class="list-group-item">
+        Info 4
+      </li>
+    </ul>
+    <div>
+      Map
+    </div>
+    <div>
+      <a class="btn btn-secondary btn-sm m-5" href="/campgrounds">Back to campgrounds</a>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <img src="<%=campground.image%>" class="image-responsive" alt="...">
+      <div class="caption-full p-3">
+        <h4 class="float-right">$9.00</h4>
+        <h4><a href=""><%=campground.name%></a></h4>
+        <p class="mt-3"><%=campground.description%></p>
+        <p> <em> Submitted By: <strong><%=campground.author.username%></strong></em></p>
+        <%if(user && campground.author.id.equals(user._id)){%>
+        <p> <form action="/campgrounds/<%=campground._id  %>?_method=DELETE" method="post">
+              <button type="submit" class="float-right btn btn-sm btn-danger m-auto">Delete</button>
+            </form>
+            <a class="btn btn-sm btn-warning" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
+        </p>
+        <%}%>
+      </div>
+    </div>
+    <div class="card card-body bg-light mt-3 ">
+      <p><a class="btn btn-success btn-sm  float-right" href="/campgrounds/<%=campground._id   %>/comments/new">Leave a review</a>
+      </p>
+      <hr>
+      <% campground.comments.forEach(comment => {%>
+        <div class="row">
+          <div class="col-md-12">
+            <strong><%=comment.author.username%></strong>
+            <span class="float-right"> 10 days ago</span>
+            <p><%=comment.text%></p>
+            <%if(user && comment.author.id.equals(user._id)){%>
+            <p class="my-3">
+              <a class="btn btn-sm btn-warning float-left" href="/campgrounds/<%=campground._id%>/comments/<%=comment._id%>/edit"> <small> Edit </small></a>
+              <form action="/campgrounds/<%=campground._id%>/comments/<%= comment._id%>?_method=DELETE" method="post">
+                <button class="btn btn-sm btn-danger float-right" type="submit"><small> Delete </small></button>
+              </form>
+            </p>
+            <%}%>
+            <hr class="my-5">
+          </div>
+        </div>
+        
+        <%})   %>
+    </div>
+  </div>
+</div>
+
+  
+  
+  
+  <%- include('../partials/footer') %>
