@@ -62,4 +62,4 @@ app.use(campgroundRoute)
 
 
 
-app.listen(8000, ()=> console.log("Server has started")) 
+app.listen(process.env.PORT || 8000, ()=> console.log("Server has started")) 
